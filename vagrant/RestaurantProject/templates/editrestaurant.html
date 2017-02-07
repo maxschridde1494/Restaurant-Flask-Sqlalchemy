@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Edit Restaurant</title>
+</head>
+<body>
+	<h1>Edit Restaurant {{restaurant.name}}</h1>
+	<form method='post' action={{url_for('editRestaurant', restaurant_id=restaurant.id)}}>
+		<input type='text' size='30' name='newname' placeholder="Name">
+		<input type='submit' value='Rename'>
+		<a href={{url_for('showRestaurants')}}>Cancel</a>
+	</form>
+</body>
+</html>
