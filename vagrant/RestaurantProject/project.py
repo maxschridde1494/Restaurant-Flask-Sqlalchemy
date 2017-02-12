@@ -91,6 +91,24 @@ def deleteMenuItem(restaurant_id, menu_id):
 		session.commit()
 		return redirect(url_for('showMenu', restaurant_id=restaurant_id))
 
+#===============
+#JSON
+#===============
+@app.route('/restaurant/<int:restaurant_id>/menu/json/')
+def restaurantMenuItemsJSON(restaurant_id):
+	restuarant=session.query(Restaurant).filter_by(id=restaurant_id).one()
+	items = session.query(MenuItem).filter_by(restaurant_id=restaurant_id)
+	return jsonify(Restaurant=[restuarant.serialize], MenuItems=[item.serialize for item in items])
+
+@app.route('/restaurants/json/')
+def restaurantsJSON():
+	return jsonify(Restaurants=[rest.serialize for rest in session.query(Restaurant).all()])
+
+@app.route('/restaurant/<int:restaurant_id>/menu/<int:menu_id>/json/')
+def menuItemJSON(restaurant_id, menu_id):
+	item = session.query(MenuItem).filter_by(id=menu_id, restaurant_id=restaurant_id).one()
+	return jsonify(MenuItem=[item.serialize])
+
 if __name__ == '__main__':
 	app.debug=True
 	app.run(host='0.0.0.0', port = 5000)

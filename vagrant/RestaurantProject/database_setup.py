@@ -23,6 +23,7 @@ class User(Base):
 	def __repr__(self):
 		return "<User(name='%s', fullname='%s', password='%s' )>" % (self.name, self.fullname, self.password)
 
+	@property
 	def serialize(self):
 		return {
 			"name": self.name,
@@ -36,6 +37,7 @@ class Restaurant(Base):
 	id = Column(Integer, primary_key=True)
 	name = Column(String(50), nullable=False)
 
+	@property
 	def serialize(self):
 		return {
 			'name': self.name,
@@ -53,6 +55,7 @@ class MenuItem(Base):
 	restaurant_id = Column(Integer, ForeignKey('restaurant.id'))
 	restaurant = relationship(Restaurant)
 
+	@property
 	def serialize(self):
 		return {
 			'name': self.name,
